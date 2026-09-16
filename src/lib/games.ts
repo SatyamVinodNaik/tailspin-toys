@@ -42,7 +42,7 @@ function mapGame(row: GameSelectionRow): Game {
     };
 }
 
-function baseGamesQuery(db: Database): ReturnType<typeof db.select> {
+function baseGamesQuery(db: Database) {
     return db
         .select(gameSelection)
         .from(games)
