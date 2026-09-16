@@ -52,3 +52,11 @@ ALL UI components MUST use dark theme colors:
 - Smooth transitions: `transition-all duration-200 ease-in-out`
 - Shadows for depth: `shadow-md`, `shadow-lg`, `shadow-xl`
 - Focus states for accessibility: `focus:ring-2 focus:ring-blue-500`
+
+## TypeScript and Commenting Standards
+
+- Use explicit TypeScript types for function parameters and return values in `db/`, `src/lib/`, and other TypeScript files.
+- Prefer typed interfaces and descriptive names over `any` or loosely inferred values.
+- Document public APIs with TSDoc/JSDoc and annotate reusable component props clearly so the contract is self-explanatory.
+- Keep comments focused on intent, constraints, and reasoning; avoid restating code or describing the obvious mechanics.
+- We enforce the return-type rule in ESLint where practical so the codebase stays consistent without weakening the readability of the site code.

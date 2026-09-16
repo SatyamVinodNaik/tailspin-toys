@@ -51,6 +51,13 @@ Refer to technology-specific instruction files:
 - Use props for configuration, not duplication
 - Document component APIs with TypeScript types
 
+### Commenting and documentation
+
+- Comment intent, not mechanics: explain why a decision exists, which constraint it satisfies, or what trade-off it represents.
+- Avoid comments that merely restate the code below them. A comment such as "set enabled to true" is noise; prefer a note like "this gate prevents stale badges after a failed save."
+- Treat outdated comments as bugs: update or delete them in the same change that modifies the related logic.
+- For reusable components and non-obvious logic, add a brief doc comment or prop description instead of inline narration.
+
 ## Development Workflow
 
 1. **Choose the right tool**: 
