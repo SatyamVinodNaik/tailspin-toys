@@ -8,11 +8,11 @@ const servers = new Map();
 const MAX_DISPLAY_ROWS = 250;
 const PROJECT_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 
-function databaseUrl() {
+function databaseUrl(): string {
     return process.env.DATABASE_URL ?? `file:${join(PROJECT_ROOT, ".data", "tailspin.db")}`;
 }
 
-function readRequestBody(request) {
+function readRequestBody(request): Promise<string> {
     return new Promise((resolve, reject) => {
         let body = "";
         request.setEncoding("utf8");
@@ -28,7 +28,7 @@ function readRequestBody(request) {
     });
 }
 
-function stripCommentsAndValidateSingleStatement(sql) {
+function stripCommentsAndValidateSingleStatement(sql): string {
     let output = "";
     let quote = "";
     let statementEnded = false;
@@ -94,7 +94,7 @@ function stripCommentsAndValidateSingleStatement(sql) {
     return output.trim();
 }
 
-function validateReadOnlyQuery(query) {
+function validateReadOnlyQuery(query): string {
     if (typeof query !== "string" || !query.trim()) {
         throw new Error("Enter a SQL query.");
     }
@@ -108,11 +108,11 @@ function validateReadOnlyQuery(query) {
     return statement;
 }
 
-function normalizeValue(value) {
+function normalizeValue(value): unknown {
     return typeof value === "bigint" ? value.toString() : value;
 }
 
-async function executeQuery(url, query) {
+async function executeQuery(url, query): Promise<{ columns: string[]; rows: Record<string, unknown>[]; truncated: boolean }> {
     const client = createClient({ url });
     try {
         const result = await client.execute(query);
@@ -126,14 +126,14 @@ async function executeQuery(url, query) {
     }
 }
 
-async function listTables(url) {
+async function listTables(url): Promise<{ columns: string[]; rows: Record<string, unknown>[]; truncated: boolean }> {
     return executeQuery(
         url,
         "SELECT name, type FROM sqlite_master WHERE type IN ('table', 'view') AND name NOT LIKE 'sqlite_%' ORDER BY type, name",
     );
 }
 
-function renderHtml() {
+function renderHtml(): string {
     return `<!doctype html>
 <html>
   <head>
@@ -282,7 +282,7 @@ function renderHtml() {
 </html>`;
 }
 
-async function startServer(url) {
+async function startServer(url): Promise<{ server: ReturnType<typeof createServer>; url: string }> {
     const server = createServer(async (request, response) => {
         try {
             if (request.url === "/api/tables" && request.method === "GET") {

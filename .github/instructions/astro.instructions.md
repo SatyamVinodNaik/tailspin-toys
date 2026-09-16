@@ -102,6 +102,13 @@ const game = await getGameById(getDatabase(), Number(id));
 - Import `getDatabase()` from `src/lib/db.ts` and the typed helpers from `src/lib/games.ts`.
 - The database must be migrated and seeded before `astro build`; the `prebuild` npm script (`db:setup`) handles this.
 
+## Component Contracts and Documentation
+
+- Define a `Props` interface for reusable `.astro` components and keep the interface near the top of the frontmatter.
+- Document each prop when its meaning is not obvious, using concise TSDoc comments such as `/** Title shown in the page header. */`.
+- Prefer comments that explain intent, constraints, or a non-obvious decision — not a restatement of the property name or the markup below it.
+- Treat stale or redundant comments as a bug: update or delete them when behavior changes.
+
 ## Client Interactivity (rare)
 
 There is no Svelte/React layer. When a page genuinely needs client behaviour, add a scoped Astro `<script>` using standard DOM APIs. Prefer native interactive elements (`<button>`, `<a href>`) so keyboard and focus behaviour come for free.
